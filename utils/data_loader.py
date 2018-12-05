@@ -78,8 +78,7 @@ def read_data_sets(FLAGS, dtype=tf.float32):
     TRAIN_TEST_FILE = train_dir + '/' + FLAGS.train_test_file
     DEV_FILE = train_dir + '/' + FLAGS.dev_file
     DEVTEST_FILE = train_dir + '/' + FLAGS.test_file
-    DICT_FILE = train_dir + '/dict.txt'
-    # DICT_FILE = train_dir + '/hypernym_vocab.txt'
+    DICT_FILE = train_dir + '/hypernym_vocab.txt' 
     REL_FILE = train_dir + '/rel.txt'
 
     # read in all files using loader_utils functions

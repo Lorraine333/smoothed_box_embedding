@@ -187,46 +187,14 @@ if __name__ == '__main__':
     flags.DEFINE_string('log_file', './log/', 'tensorboard log files')
 
     """dataset parameters"""
-    # # flags.DEFINE_string('train_dir', '/iesl/canvas/xiangl/canvas/data/wordnet/has_isa', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/iesl/canvas/xiangl/canvas/data/wordnet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/Projects/data/wordnet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/2018Research/Data/Octavian_WordNet', 'Directory to put the data.')
-    flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/2018Research/Data/Mammal_WordNet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/2018Research/Data/WordNet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/2017Research/probabilistic-hypercube-lattices/data/wordnet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/home/xiangl/workspace/data/country/s1', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_dir', '/mnt/nfs/work1/mccallum/xiangl/data/wordnet', 'Directory to put the data.')
-    # # flags.DEFINE_string('train_file', 'wordnet_train_aug_with_cpr0.6.txt', 'which training file to use')
-    # flags.DEFINE_string('train_file', 'wordnet_train_preneg.txt', 'which training file to use')
-    flags.DEFINE_string('train_file', 'wordnet_train_0percent.txt', 'which training file to use')
-    # # flags.DEFINE_string('train_file', 'wordnet_train.txt', 'which training file to use')
+    flags.DEFINE_string('train_dir', './data', 'Directory to put the data.')
+    flags.DEFINE_string('train_file', 'wordnet_train.txt', 'which training file to use')
     flags.DEFINE_string('train_test_file', 'wordnet_train_test.txt', 'which dev file to use')
-    # flags.DEFINE_string('dev_file', 'wordnet_valid.txt', 'which dev file to use')
-    # flags.DEFINE_string('test_file', 'wordnet_test.txt', 'which test file to use')
-    # flags.DEFINE_string('dev_file', 'wordnet_balanced_valid.txt', 'which dev file to use')
-    # flags.DEFINE_string('test_file', 'wordnet_balanced_test.txt', 'which test file to use')
-    flags.DEFINE_string('dev_file', 'wordnet_valid.txt', 'which dev file to use')
+    flags.DEFINE_string('dev_file', 'wordnet_dev.txt', 'which dev file to use')
     flags.DEFINE_string('test_file', 'wordnet_test.txt', 'which test file to use')
     flags.DEFINE_string('marg_prob_file', 'count.txt', 'which marginal probability file to use')
-    # # flags.DEFINE_string('train_file', 'tiny_test.txt', 'which training file to use')
-    # # flags.DEFINE_string('train_test_file', 'tiny_test.txt', 'which dev file to use')
-    # # flags.DEFINE_string('dev_file', 'tiny_test.txt', 'which dev file to use')
-    # # flags.DEFINE_string('test_file', 'tiny_test.txt', 'which test file to use')
-    # # flags.DEFINE_string('marg_prob_file', 'tiny_test_count.txt', 'which marginal probability file to use')
-    # # flags.DEFINE_string('train_file', 'train.txt', 'which training file to use')
-    # # flags.DEFINE_string('train_test_file', 'train.txt', 'which dev file to use')
-    # # flags.DEFINE_string('dev_file', 'valid.txt', 'which dev file to use')
-    # # flags.DEFINE_string('test_file', 'test.txt', 'which test file to use')
-    # new wordnet data 2018.11.11
-    # flags.DEFINE_string('train_dir', '/Users/lorraine/UMass/2018Research/Data/hypernym_merynym_wordnet', 'Directory to put the data.')
-    # flags.DEFINE_string('train_file', 'hypernym_train.txt', 'which training file to use')
-    # flags.DEFINE_string('train_test_file', 'hypernym_train.txt', 'which dev file to use')
-    # flags.DEFINE_string('dev_file', 'hypernym_test.txt', 'which dev file to use')
-    # flags.DEFINE_string('test_file', 'hypernym_test.txt', 'which test file to use')
-    # flags.DEFINE_string('marg_prob_file', 'count.txt', 'which marginal probability file to use')
 
-
-    flags.DEFINE_string('neg', 'uniform', 'uniformly generate negative examples or use pre generated negative examplse')
+    flags.DEFINE_string('neg', 'pre_neg', 'uniformly generate negative examples or use pre generated negative examplse')
     flags.DEFINE_integer('rel_size', 1,
                          'relation_size. one means only test for isa relations, else will test for multiple relations')
     flags.DEFINE_boolean('term', False,
@@ -240,7 +208,7 @@ if __name__ == '__main__':
                         'if choose pre_train at init_embedding, specify which embedding you want to use')
 
     """tensorflow model parameters"""
-    flags.DEFINE_string('model', 'cube', 'which model to use, poe cube, or transe')
+    flags.DEFINE_string('model', 'softbox', 'which model to use, poe cube, transe, softbox')
     flags.DEFINE_string('measure', 'uniform',
                         'exp or uniform represent for different measure. Attention: for different measure, embedding initialization is different')
     flags.DEFINE_boolean('surrogate_bound', True, 'whether to use upper bound for disjoint functions.')
@@ -258,8 +226,7 @@ if __name__ == '__main__':
 
     """optimization parameters"""
     flags.DEFINE_string('optimizer', 'adam', 'which optimizer to use: adam or sgd')
-    flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate.')
-    # flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
+    flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
 
     flags.DEFINE_float('epsilon', 1e-8, 'Optimizer epsilon')
     flags.DEFINE_float('softfreeze', '0.0', 'whether to use soft gradient on neg delta embedding')
@@ -274,20 +241,11 @@ if __name__ == '__main__':
     flags.DEFINE_string('marginal_method', 'universe', 'softplus, universe or sigmoid')
 
     """training parameters"""
-    # flags.DEFINE_integer('max_steps',50000, 'Number of steps to run trainer.')
-    # flags.DEFINE_integer('batch_size', 74, 'Batch size. Must divide evenly into the dataset sizes.')
-    # flags.DEFINE_integer('print_every', 10, 'Every 20 step, print out the evaluation results')
-    # flags.DEFINE_integer('embed_dim', 5, 'word embedding dimension')
     flags.DEFINE_integer('max_steps', 50000, 'Number of steps to run trainer.')
-    flags.DEFINE_integer('batch_size', 1176, 'Batch size. Must divide evenly into the dataset sizes.')
+    flags.DEFINE_integer('batch_size', 8000, 'Batch size. Must divide evenly into the dataset sizes.')
     flags.DEFINE_integer('print_every', 10, 'Every 20 step, print out the evaluation results')
     flags.DEFINE_integer('embed_dim', 5, 'word embedding dimension')
     flags.DEFINE_boolean('overfit', False, 'Over fit the dev data to check model')
-    # flags.DEFINE_integer('max_steps', 5000, 'Number of steps to run trainer.')
-    # flags.DEFINE_integer('batch_size', 74, 'Batch size. Must divide evenly into the dataset sizes.')
-    # flags.DEFINE_integer('print_every', 10, 'Every 20 step, print out the evaluation results')
-    # flags.DEFINE_integer('embed_dim', 2, 'word embedding dimension')
-    # flags.DEFINE_boolean('overfit', False, 'Over fit the dev data to check model')
 
 
     """evalution and error analysis parameters"""
