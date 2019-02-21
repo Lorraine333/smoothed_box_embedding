@@ -100,7 +100,9 @@ class tf_model(object):
         self.eval_prob = -evaluation_logits
 
         """get conditional probability loss"""
-        self.cond_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels = self.label, logits=conditional_logits))
+        # self.cond_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels = self.label, logits=conditional_logits))
+        self.cond_loss = -tf.reduce_mean(tf.multiply(conditional_logits, self.label) +
+                                         tf.multiply(tf.log(1-tf.exp(conditional_logits)+1e-10), 1-self.label))
         self.cond_loss = FLAGS.w1 * self.cond_loss
 
         """model marg prob loss"""
