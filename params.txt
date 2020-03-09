@@ -1,0 +1,13 @@
+% batch size: 8000 
+% dimension: 50
+% edge loss weight: 3.0 
+% unary loss weight: 7.0
+% learning rate: 0.001
+% minimum dimension delta size: 1e-6
+% optimizer: Adam
+% sigma for softplus: 1.0
+% box min initialization: uniformly from 1e-4 to 1e-2
+% box delta initialization: uniformly from 0.9 to 0.99
+% global regularization method: l1 
+% global regularization strength: 0.1
+% max training steps: 100,000
