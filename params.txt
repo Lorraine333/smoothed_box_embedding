@@ -8,6 +8,6 @@
 % sigma for softplus: 1.0
 % box min initialization: uniformly from 1e-4 to 1e-2
 % box delta initialization: uniformly from 0.9 to 0.99
-% global regularization method: l1 
+% global regularization method: delta
 % global regularization strength: 0.1
 % max training steps: 100,000
